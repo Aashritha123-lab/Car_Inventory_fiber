@@ -1,33 +1,33 @@
 ## 🚗 Car Inventory API — Go + Fiber + PostgreSQL
 
-A lightweight RESTful API built using Go (Fiber framework) to manage car inventory data.
-This project demonstrates real-world backend design — structured routes, PostgreSQL integration, error handling, testing, and containerization — ideal for DevOps and Platform Engineering demonstrations.
+        A lightweight RESTful API built using Go (Fiber framework) to manage car inventory data.
+        This project demonstrates real-world backend design — structured routes, PostgreSQL integration, error handling, testing, and containerization — ideal for         DevOps and Platform Engineering demonstrations.
 ---
 ## 🧩 Tech Stack
-Component	Technology
-Language	Go (v1.21+)
-Web Framework	Fiber v2
-Database	PostgreSQL
-DB Driver	database/sql
-Testing	Go testing package + stretchr/testify
-Benchmarking	Go -bench and -benchmem
-Containerization	Docker & Docker Compose
+        Component	Technology
+        Language	Go (v1.21+)
+        Web Framework	Fiber v2
+        Database	PostgreSQL
+        DB Driver	database/sql
+        Testing	Go testing package + stretchr/testify
+        Benchmarking	Go -bench and -benchmem
+        Containerization	Docker & Docker Compose
 ---
 ## ⚙️ Features
 
-✅ RESTful CRUD operations for cars
-✅ Structured Fiber handlers and routes
-✅ PostgreSQL integration with connection pooling
-✅ Unit and benchmark tests
-✅ Graceful error handling and input validation
-✅ Fully containerized with Docker & Docker Compose
+        ✅ RESTful CRUD operations for cars
+        ✅ Structured Fiber handlers and routes
+        ✅ PostgreSQL integration with connection pooling
+        ✅ Unit and benchmark tests
+        ✅ Graceful error handling and input validation
+        ✅ Fully containerized with Docker & Docker Compose
 ---
 ## 🧱 API Endpoints
-Method 	   Endpoint	     Description
-POST	     /cars	        Add a new car to inventory
-GET	       /cars/:id	    Retrieve car details by ID
-PUT	       /cars/:id	    Update car details
-DELETE	   /cars/:id	    Delete a car from inventory
+        Method 	   Endpoint	     Description
+        POST	     /cars	        Add a new car to inventory
+        GET	       /cars/:id	    Retrieve car details by ID
+        PUT	       /cars/:id	    Update car details
+        DELETE	   /cars/:id	    Delete a car from inventory
 ---
 ## 🧰 Local Setup (Manual Run)
 ### 1️⃣ Clone the repository
@@ -59,25 +59,25 @@ DELETE	   /cars/:id	    Delete a car from inventory
     go test -benchmem . -bench .
 
 ## 🐳 Docker Setup
-Dockerfile
-# ---------- Stage 1: Build ----------
-FROM golang:1.22-alpine AS builder
-WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-COPY . .
-RUN go build -o car_inventory .
+        Dockerfile
+        # ---------- Stage 1: Build ----------
+        FROM golang:1.22-alpine AS builder
+        WORKDIR /app
+        COPY go.mod go.sum ./
+        RUN go mod download
+        COPY . .
+        RUN go build -o car_inventory .
+        
+        # ---------- Stage 2: Runtime ----------
+        FROM gcr.io/distroless/base-debian12
+        WORKDIR /app
+        COPY --from=builder /app/car_inventory .
+        EXPOSE 3051
+        ENTRYPOINT ["./car_inventory"]
 
-# ---------- Stage 2: Runtime ----------
-FROM gcr.io/distroless/base-debian12
-WORKDIR /app
-COPY --from=builder /app/car_inventory .
-EXPOSE 3051
-ENTRYPOINT ["./car_inventory"]
-
-🧩 Docker Compose Setup
-  docker-compose.yml
-    version: "3.9"
+## 🧩 Docker Compose Setup
+        docker-compose.yml
+            version: "3.9"
 
     services:
       app:
