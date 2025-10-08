@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: car_inventory_api
+    ports:
+      - "3051:3051"
+    environment:
+      - DB_USER=postgres
+      - DB_PASS=Helper@123
+      - DB_NAME=car_inventory
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: car_inventory_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Helper@123
+      POSTGRES_DB: car_inventory
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
